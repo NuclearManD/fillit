@@ -11,28 +11,26 @@
 # **************************************************************************** #
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -I. -Ilibft -c
+CFLAGS=-Wall -Wextra -Werror -Iinclude -Ilibft -c
 NAME=fillit
-SRC=	map_intersect.c \
+SRC=	src/map_intersect.c \
 
 
-$(NAME):
-	mkdir -f build
+$(NAME): libft/libft.a
 	$(CC) $(SRC) $(CFLAGS)
-	$(CC) build/*.o -o $(NAME)
+	$(CC) *.o -o $(NAME)
 	
 libft/libft.a:
-	cd libft
-	make
-	cd ..
+	(cd libft; make)
 
 all: $(NAME)
 
 clean: 
-	rm -f $(OBJ)
+	rm -rfv *.o
 
 fclean: clean
 	rm -f $(NAME)
+	(cd libft; make fclean)
 
 re: fclean all
 
