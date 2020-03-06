@@ -23,19 +23,18 @@
 
 void			reset_list(t_list **tetrominoes)
 {
-	t_list	*sec_to_last;
-	t_list	*tmp;
+	t_list	*last;
+	t_list	*old_first;
 
-	sec_to_last = *tetrominoes;
-	if (!sec_to_last->next)
+	last = *tetrominoes;
+	if (!last->next)
 		return ;
-	while (sec_to_last->next->next)
-		sec_to_last = sec_to_last->next;
-	tmp = *tetrominoes;
-	*tetrominoes = sec_to_last->next;
-	sec_to_last->next = tmp;
-	(*tetrominoes)->next = tmp->next;
-	tmp->next = NULL;
+	while (last->next)
+		last = last->next;
+	old_first = *tetrominoes;
+	*tetrominoes = old_first->next;
+	last->next = old_first;
+	old_first->next = NULL;
 }
 
 /*
@@ -78,22 +77,26 @@ int				attempt_size(t_list *tetrominoes, t_map **map)
 	cnt = 1;
 	while (cnt)
 	{
-		if (attempt_map_insert(*map, tetrominoes->content))
+		map_cpy = copy_map(*map);
+		if (attempt_map_insert(map_cpy, tetrominoes->content))
 		{
 			if (tetrominoes->next)
 			{
-				map_cpy = copy_map(*map);
 				if (attempt_size(tetrominoes->next, &map_cpy))
 				{
 					free_map(*map);
 					*map = map_cpy;
 					return (1);
 				}
-				free_map(map_cpy);
 			}
 			else
+			{
+				free_map(*map);
+				*map = map_cpy;
 				return (1);
+			}
 		}
+		free_map(map_cpy);
 		cnt = reorder_list(&tetrominoes, cnt);
 	}
 	return (0);
