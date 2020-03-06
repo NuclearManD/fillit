@@ -13,7 +13,7 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -Iinclude -Ilibft -c
 NAME=fillit
-SRC=	src/map_intersect.c \
+SRC=	src/map_util.c \
 
 
 $(NAME): libft/libft.a
