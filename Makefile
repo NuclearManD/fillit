@@ -14,6 +14,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror -Iinclude -Ilibft -c
 NAME=fillit
 SRC=	src/map_util.c \
+	src/map_mem.c \
 
 
 $(NAME): libft/libft.a

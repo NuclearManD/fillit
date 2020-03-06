@@ -21,16 +21,15 @@
 t_map		*make_map(int x, int y)
 {
 	t_map	*out;
-	int		*nbrs;
 	void	*mem_chunk;
 	int		i;
 
 	mem_chunk = (int **)malloc(sizeof(int *) * x + sizeof(int) * x * y);
 	out = (t_map *)malloc(sizeof(t_map));
-	out->data = (int **)memory_chunk;
+	out->data = (int **)mem_chunk;
 	i = -1;
 	while (++i < x)
-		out->data[x] = &(memory_chunk[sizeof(int *) + i * y * sizeof(int)]);
+		out->data[x] = &(mem_chunk[sizeof(int *) + i * y * sizeof(int)]);
 	return (out);
 }
 
