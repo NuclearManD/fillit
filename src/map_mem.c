@@ -55,7 +55,7 @@ t_map		*copy_map(t_map *map)
 		out->data[i] = &(mem_chunk[sizeof(char *) * x + i * y]);
 	out->size_x = x;
 	out->size_y = y;
-	ft_memcpy(&(mem_chunk[sizeof(char *) * x]), &(map->data[x + 1]), x * y);
+	ft_memcpy(&(out->data[x]), &(map->data[x]), x * y);
 	return (out);
 }
 

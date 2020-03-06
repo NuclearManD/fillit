@@ -29,6 +29,7 @@ int				attempt_size(t_list *tetrominoes, t_map **map)
 			*map = map_cpy;
 			return (1);
 		}
+		free_map(map_cpy);
 		return (0);
 	}
 	return (1);
