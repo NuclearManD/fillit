@@ -13,7 +13,7 @@
 #include "fillit_maps.h"
 #include <stdio.h>
 
-int				map_intersect(t_map *map, t_map *tetromino, int x, int y)
+int			map_intersect(t_map *map, t_map *tetromino, int x, int y)
 {
 	int i;
 	int j;
@@ -26,6 +26,28 @@ int				map_intersect(t_map *map, t_map *tetromino, int x, int y)
 		{
 			if ((!!map->data[i + x][j + y]) && (!!tetromino->data[i][j]))
 				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int			attempt_map_place(t_map *map, t_map *tetromino, int x, int y)
+{
+	int i;
+	int j;
+
+	if (!map_intersect(map, tetromino, x, y))
+		return (0);
+	i = 0;
+	while (i < tetromino->size_x && i + x < map->size_x)
+	{
+		j = 0;
+		while (j < tetromino->size_y && j + y < map->size_y)
+		{
+			if (!!tetromino->data[i][j])
+				map->data[i + x][j + y] = tetromino->data[i][j];
 			j++;
 		}
 		i++;
