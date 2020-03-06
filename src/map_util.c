@@ -60,6 +60,31 @@ int			attempt_map_place(t_map *map, t_map *tetromino, int x, int y)
 	return (1);
 }
 
+void		print_map(t_map *map)
+{
+	int		i;
+	int		j;
+	char	c;
+
+	i = 0;
+	while (i < map->size_x)
+	{
+		j = 0;
+		while (j < map->size_y)
+		{
+			if (map->data[i][j])
+			{
+				c = 'A' - 1 + map->data[i][j];
+				write(1, &c, 1);
+			} else
+				write(1, '.', 1);
+			j++;
+		}
+		write(1, '\n', 1);
+		i++;
+	}
+}
+
 /*
 ** int main() {
 ** 	int arr[4][4] = {	{1, 1, 0, 1},
