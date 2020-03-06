@@ -14,25 +14,89 @@
 #include "solver.h"
 #include "libft.h"
 
+/*
+** This function just swaps the first and last element of a list.
+** List size MUST be at least one or you WILL segfault.  Do not make this a
+** possibility.  The caller should check list size, thus the call can be
+** avoided completely and further optimizations can be made. CYFP!!!
+*/
+
+void			reset_list(t_list **tetrominoes)
+{
+	t_list	*sec_to_last;
+	t_list	*tmp;
+
+	sec_to_last = *tetrominoes;
+	if (!sec_to_last->next)
+		return ;
+	while (sec_to_last->next->next)
+		sec_to_last = sec_to_last->next;
+	tmp = *tetrominoes;
+	*tetrominoes = sec_to_last->next;
+	sec_to_last->next = tmp;
+	(*tetrominoes)->next = tmp->next;
+	tmp->next = NULL;
+}
+
+/*
+** n should never be 0.  Any positive int is OK, on end of list it returns 0.
+** If still in the list then the next n value is given
+** On end of list, the list is reset to it's original state (assuming function
+** was called in order n = [1,2,3...EOL])
+*/
+
+int				reorder_list(t_list **tetrominoes, int n)
+{
+	int		count;
+	t_list	*idx;
+	void	*tmp;
+
+	idx = *tetrominoes;
+	count = 0;
+	while (n && idx->next)
+	{
+		idx = idx->next;
+		count++;
+		n--;
+	}
+	tmp = idx->content;
+	idx->content = (*tetrominoes)->content;
+	(*tetrominoes)->content = tmp;
+	if (n)
+	{
+		reset_list(tetrominoes);
+		return (0);
+	}
+	return (count + 1);
+}
+
 int				attempt_size(t_list *tetrominoes, t_map **map)
 {
 	t_map	*map_cpy;
+	int		cnt;
 
-	if (!attempt_map_insert(*map, tetrominoes->content))
-		return (0);
-	if (tetrominoes->next)
+	cnt = 1;
+	while (cnt)
 	{
-		map_cpy = copy_map(*map);
-		if (attempt_size(tetrominoes->next, &map_cpy))
+		if (attempt_map_insert(*map, tetrominoes->content))
 		{
-			free_map(*map);
-			*map = map_cpy;
-			return (1);
+			if (tetrominoes->next)
+			{
+				map_cpy = copy_map(*map);
+				if (attempt_size(tetrominoes->next, &map_cpy))
+				{
+					free_map(*map);
+					*map = map_cpy;
+					return (1);
+				}
+				free_map(map_cpy);
+			}
+			else
+				return (1);
 		}
-		free_map(map_cpy);
-		return (0);
+		cnt = reorder_list(&tetrominoes, cnt);
 	}
-	return (1);
+	return (0);
 }
 
 t_map			*solve(t_list *tetrominoes, int len)
