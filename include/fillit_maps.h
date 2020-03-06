@@ -33,5 +33,6 @@ void			free_map(t_map *map);
 int				map_intersect(t_map *map, t_map *tetromino, int x, int y);
 int				attempt_map_loc(t_map *map, t_map *tetromino, int x, int y);
 int				attempt_map_insert(t_map *map, t_map *tetromino);
+void			print_map(t_map *map);
 
 #endif

@@ -11,15 +11,16 @@
 # **************************************************************************** #
 
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -Iinclude -Ilibft -c
+CFLAGS=-Wall -Wextra -Werror -Iinclude -Ilibft -g -c
 NAME=fillit
 SRC=	src/map_util.c \
 	src/map_mem.c \
+	src/fillit.c \
 
 
 $(NAME): libft/libft.a
 	$(CC) $(SRC) $(CFLAGS)
-	$(CC) *.o -o $(NAME)
+	$(CC) -Llibft -lft *.o -o $(NAME)
 	
 libft/libft.a:
 	(cd libft; make)
