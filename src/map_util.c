@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "fillit_maps.h"
-#include <stdio.h>
+#include <unistd.h>
 
 int			map_intersect(t_map *map, t_map *tetromino, int x, int y)
 {
