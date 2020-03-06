@@ -20,6 +20,7 @@ typedef struct	s_map {
 }				t_map;
 
 t_map			*make_map(int x, int y);
+t_map			*copy_map(t_map *map);
 void			free_map(t_map *map);
 
 /*

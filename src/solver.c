@@ -14,15 +14,22 @@
 #include "solver.h"
 #include "libft.h"
 
-int				attempt_size(t_list *tetrominoes, t_map *map)
+int				attempt_size(t_list *tetrominoes, t_map **map)
 {
-	while (tetrominoes)
+	t_map	*map_cpy;
+
+	if (!attempt_map_insert(*map, tetrominoes->content))
+		return (0);
+	if (tetrominoes->next)
 	{
-		if (!attempt_map_insert(map, tetrominoes->content))
+		map_cpy = copy_map(*map);
+		if (attempt_size(tetrominoes->next, &map_cpy))
 		{
-			return (0);
+			free_map(*map);
+			*map = map_cpy;
+			return (1);
 		}
-		tetrominoes = tetrominoes->next;
+		return (0);
 	}
 	return (1);
 }
@@ -36,7 +43,7 @@ t_map			*solve(t_list *tetrominoes, int len)
 	while (1)
 	{
 		map = make_map(current_map_size, current_map_size);
-		if (attempt_size(tetrominoes, map))
+		if (attempt_size(tetrominoes, &map))
 			return (map);
 		free_map(map);
 		current_map_size++;

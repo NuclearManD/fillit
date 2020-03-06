@@ -19,6 +19,6 @@
 int				ft_sqrt(int val);
 
 t_map			*solve(t_list *tetrominoes, int len);
-int				attempt_size(t_list *tetrominoes, t_map *map);
+int				attempt_size(t_list *tetrominoes, t_map **map);
 
 #endif
