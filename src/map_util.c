@@ -105,29 +105,3 @@ void		print_map(t_map *map)
 		y++;
 	}
 }
-
-int main() {
-	int arr[4][4] = {	{2, 2, 0, 4},
-						{2, 0, 0, 0},
-						{0, 0, 0, 0},
-						{0, 0, 1, 1}};
-	int *arrd[4] = {arr[0], arr[1], arr[2], arr[3]};
-	t_map map1 = {4, 4, arrd};
-	int arr2[2][2] = {{3,3},{3,3}};
-	int *tetd[2] = {arr2[0], arr2[1]};
-	t_map tet = {2, 2, tetd};
-
-	print_map(&tet);
-	printf("\n");
-	print_map(&map1);
-	printf("%i\n", map_intersect(&map1, &tet, 0, 0));
-	printf("%i\n", map_intersect(&map1, &tet, 1, 1));
-	printf("%i\n", map_intersect(&map1, &tet, 1, 0));
-	printf("%i\n", map_intersect(&map1, &tet, 0, 1));
-	printf("%i\n", map_intersect(&map1, &tet, 2, 1));
-	printf("%i\n", map_intersect(&map1, &tet, 1, 2));
-	
-	attempt_map_insert(&map1, &tet);
-	print_map(&map1);
-	return (-100000);
-}
