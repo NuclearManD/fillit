@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fillit_maps.h"
+#include "solver.h"
 #include "libft.h"
 
 int				main(int ac, char **av)
@@ -18,6 +19,7 @@ int				main(int ac, char **av)
 	t_map *map;
 	t_map *tet1;
 	t_map *tet2;
+	t_list *li;
 
 	if (ac != 2)
 	{
@@ -26,8 +28,6 @@ int				main(int ac, char **av)
 		ft_putstr(" file\n");
 		return (0);
 	}
-	map = make_map(3, 5);
-	map->data[0][0] = 10;
 	tet1 = make_map(2, 3);
 	tet1->data[0][0] = 1;
 	tet1->data[0][1] = 1;
@@ -38,8 +38,11 @@ int				main(int ac, char **av)
 	tet2->data[0][1] = 2;
 	tet2->data[0][2] = 2;
 	tet2->data[0][3] = 2;
-	attempt_map_insert(map, tet1);
-	attempt_map_insert(map, tet2);
+	
+	li = ft_lstnew(tet1, 0);
+	li->next = ft_lstnew(tet2, 0);
+	
+	map = solve(li, 2);
 	print_map(map);
 	return (0);
 }

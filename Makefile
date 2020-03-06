@@ -16,6 +16,8 @@ NAME=fillit
 SRC=	src/map_util.c \
 	src/map_mem.c \
 	src/fillit.c \
+	src/solver.c \
+	src/ft_sqrt.c \
 
 
 $(NAME): libft/libft.a
