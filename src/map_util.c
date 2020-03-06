@@ -12,7 +12,6 @@
 
 #include "fillit_maps.h"
 #include <unistd.h>
-#include <stdio.h>
 
 /*
 ** These functions are intended to be very fast, so any unnecessary checks are
