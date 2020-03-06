@@ -12,6 +12,7 @@
 
 #include "fillit_maps.h"
 #include <unistd.h>
+#include <stdio.h>
 
 /*
 ** These functions are intended to be very fast, so any unnecessary checks are
@@ -62,47 +63,52 @@ int			attempt_map_place(t_map *map, t_map *tetromino, int x, int y)
 
 void		print_map(t_map *map)
 {
-	int		i;
-	int		j;
+	int		y;
+	int		x;
 	char	c;
 
-	i = 0;
-	while (i < map->size_x)
+	y = 0;
+	while (y < map->size_y)
 	{
-		j = 0;
-		while (j < map->size_y)
+		x = 0;
+		while (x < map->size_x)
 		{
-			if (map->data[i][j])
+			if (map->data[x][y])
 			{
-				c = 'A' - 1 + map->data[i][j];
+				c = 'A' - 1 + map->data[x][y];
 				write(1, &c, 1);
 			} else
-				write(1, '.', 1);
-			j++;
+				write(1, ".", 1);
+			x++;
 		}
-		write(1, '\n', 1);
-		i++;
+		write(1, "\n", 1);
+		y++;
 	}
 }
 
-/*
-** int main() {
-** 	int arr[4][4] = {	{1, 1, 0, 1},
-** 						{1, 0, 0, 0},
-** 						{1, 0, 0, 0},
-** 						{1, 1, 1, 1}};
-** 	int *arrd[4] = {arr[0], arr[1], arr[2], arr[3]};
-** 	t_map map1 = {4, 4, arrd};
-** 	int arr2[2][2] = {{1,1},{1,1}};
-** 	int *tetd[2] = {arr2[0], arr[1]};
-** 	t_map tet = {2, 2, tetd};
-**
-** 	printf("%i\n", map_intersect(&map1, &tet, 0, 0));
-** 	printf("%i\n", map_intersect(&map1, &tet, 1, 1));
-** 	printf("%i\n", map_intersect(&map1, &tet, 1, 0));
-** 	printf("%i\n", map_intersect(&map1, &tet, 0, 1));
-** 	printf("%i\n", map_intersect(&map1, &tet, 2, 1));
-** 	printf("%i\n", map_intersect(&map1, &tet, 1, 2));
-** 	return (-100000);
-** }
-*/
+
+int main() {
+	int arr[4][4] = {	{2, 2, 0, 1},
+						{2, 0, 0, 0},
+						{2, 0, 0, 0},
+						{1, 1, 1, 1}};
+	int *arrd[4] = {arr[0], arr[1], arr[2], arr[3]};
+	t_map map1 = {4, 4, arrd};
+	int arr2[2][2] = {{3,3},{3,3}};
+	int *tetd[2] = {arr2[0], arr2[1]};
+	t_map tet = {2, 2, tetd};
+
+	print_map(&tet);
+	printf("\n");
+	print_map(&map1);
+	printf("%i\n", map_intersect(&map1, &tet, 0, 0));
+	printf("%i\n", map_intersect(&map1, &tet, 1, 1));
+	printf("%i\n", map_intersect(&map1, &tet, 1, 0));
+	printf("%i\n", map_intersect(&map1, &tet, 0, 1));
+	printf("%i\n", map_intersect(&map1, &tet, 2, 1));
+	printf("%i\n", map_intersect(&map1, &tet, 1, 2));
+	
+	attempt_map_place(&map1, &tet, 1, 1);
+	print_map(&map1);
+	return (-100000);
+}
