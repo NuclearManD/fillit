@@ -13,6 +13,11 @@
 #include "fillit_maps.h"
 #include <unistd.h>
 
+/*
+** These functions are intended to be very fast, so any unnecessary checks are
+** skipped.
+*/
+
 int			map_intersect(t_map *map, t_map *tetromino, int x, int y)
 {
 	int i;
