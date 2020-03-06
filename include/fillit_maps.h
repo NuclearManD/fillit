@@ -16,7 +16,7 @@
 typedef struct	s_map {
 	int		size_x;
 	int		size_y;
-	int		**data;
+	char	**data;
 }				t_map;
 
 t_map			*make_map(int x, int y);

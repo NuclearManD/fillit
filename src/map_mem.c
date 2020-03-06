@@ -25,15 +25,37 @@ t_map		*make_map(int x, int y)
 	void	*mem_chunk;
 	int		i;
 
-	mem_chunk = (void *)malloc(sizeof(int *) * x + sizeof(int) * x * y);
-	ft_bzero(mem_chunk, sizeof(int *) * x + sizeof(int) * x * y);
+	mem_chunk = malloc(sizeof(char *) * x + x * y);
+	ft_bzero(mem_chunk, sizeof(char *) * x + x * y);
 	out = (t_map *)malloc(sizeof(t_map));
-	out->data = (int **)mem_chunk;
+	out->data = (char **)mem_chunk;
 	i = -1;
 	while (++i < x)
-		out->data[i] = &(mem_chunk[sizeof(int *) * x + i * y * sizeof(int)]);
+		out->data[i] = &(mem_chunk[sizeof(char *) * x + i * y]);
 	out->size_x = x;
 	out->size_y = y;
+	return (out);
+}
+
+t_map		*copy_map(t_map *map)
+{
+	t_map	*out;
+	void	*mem_chunk;
+	int		i;
+	int		x;
+	int		y;
+
+	x = map->size_x;
+	y = map->size_y;
+	mem_chunk = malloc(sizeof(char *) * x + x * y);
+	out = (t_map *)malloc(sizeof(t_map));
+	out->data = (char **)mem_chunk;
+	i = -1;
+	while (++i < x)
+		out->data[i] = &(mem_chunk[sizeof(char *) * x + i * y]);
+	out->size_x = x;
+	out->size_y = y;
+	ft_memcpy(&(mem_chunk[sizeof(char *) * x]), &(map->data[x + 1]), x * y);
 	return (out);
 }
 
