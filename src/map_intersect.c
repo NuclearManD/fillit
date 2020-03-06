@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fillit_maps.h"
+#include <stdio.h>
 
 int				map_intersect(t_map *map, t_map *tetromino, int x, int y)
 {
@@ -21,12 +22,35 @@ int				map_intersect(t_map *map, t_map *tetromino, int x, int y)
 	while (i < tetromino->size_x && i + x < map->size_x)
 	{
 		j = 0;
-		while (j < tetromino->size_y || j + y >= map->size_y)
+		while (j < tetromino->size_y && j + y < map->size_y)
 		{
 			if ((!!map->data[i + x][j + y]) && (!!tetromino->data[i][j]))
 				return (0);
 			j++;
 		}
+		i++;
 	}
 	return (1);
 }
+
+/*
+** int main() {
+** 	int arr[4][4] = {	{1, 1, 0, 1},
+** 						{1, 0, 0, 0},
+** 						{1, 0, 0, 0},
+** 						{1, 1, 1, 1}};
+** 	int *arrd[4] = {arr[0], arr[1], arr[2], arr[3]};
+** 	t_map map1 = {4, 4, arrd};
+** 	int arr2[2][2] = {{1,1},{1,1}};
+** 	int *tetd[2] = {arr2[0], arr[1]};
+** 	t_map tet = {2, 2, tetd};
+**
+** 	printf("%i\n", map_intersect(&map1, &tet, 0, 0));
+** 	printf("%i\n", map_intersect(&map1, &tet, 1, 1));
+** 	printf("%i\n", map_intersect(&map1, &tet, 1, 0));
+** 	printf("%i\n", map_intersect(&map1, &tet, 0, 1));
+** 	printf("%i\n", map_intersect(&map1, &tet, 2, 1));
+** 	printf("%i\n", map_intersect(&map1, &tet, 1, 2));
+** 	return (-100000);
+** }
+*/
