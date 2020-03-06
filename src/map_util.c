@@ -39,7 +39,7 @@ int			map_intersect(t_map *map, t_map *tetromino, int x, int y)
 	return (1);
 }
 
-int			attempt_map_place(t_map *map, t_map *tetromino, int x, int y)
+int			attempt_map_loc(t_map *map, t_map *tetromino, int x, int y)
 {
 	int i;
 	int j;
@@ -59,6 +59,26 @@ int			attempt_map_place(t_map *map, t_map *tetromino, int x, int y)
 		i++;
 	}
 	return (1);
+}
+
+/*
+** TODO: optimize this function so that obviously bad spots are not tested
+*/
+
+int			attempt_map_insert(t_map *map, t_map *tetromino)
+{
+	int x;
+	int y;
+
+	y = -1;
+	while (++y <= map->size_y - tetromino->size_y)
+	{
+		x = -1;
+		while (++x <= map->size_x - tetromino->size_x)
+			if (attempt_map_loc(map, tetromino, x, y))
+				return (1);
+	}
+	return (0);
 }
 
 void		print_map(t_map *map)
@@ -86,12 +106,11 @@ void		print_map(t_map *map)
 	}
 }
 
-
 int main() {
-	int arr[4][4] = {	{2, 2, 0, 1},
+	int arr[4][4] = {	{2, 2, 0, 4},
 						{2, 0, 0, 0},
-						{2, 0, 0, 0},
-						{1, 1, 1, 1}};
+						{0, 0, 0, 0},
+						{0, 0, 1, 1}};
 	int *arrd[4] = {arr[0], arr[1], arr[2], arr[3]};
 	t_map map1 = {4, 4, arrd};
 	int arr2[2][2] = {{3,3},{3,3}};
@@ -108,7 +127,7 @@ int main() {
 	printf("%i\n", map_intersect(&map1, &tet, 2, 1));
 	printf("%i\n", map_intersect(&map1, &tet, 1, 2));
 	
-	attempt_map_place(&map1, &tet, 1, 1);
+	attempt_map_insert(&map1, &tet);
 	print_map(&map1);
 	return (-100000);
 }

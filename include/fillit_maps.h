@@ -19,17 +19,19 @@ typedef struct	s_map {
 	int		**data;
 }				t_map;
 
-t_map		*make_map(int x, int y);
-void		free_map(t_map *map);
-
+t_map			*make_map(int x, int y);
+void			free_map(t_map *map);
 
 /*
-** attempt_map_place checks using map_intersect, returning 0 on failure.
+** attempt_map_loc checks using map_intersect, returning 0 on failure.
 ** Thus you typically needn't call map_intersect.
+**
+** attempt_map_insert finds a spot in the map that the tetromino fits,
+** returning 0 on failure.
 */
 
-int			map_intersect(t_map *map, t_map *tetromino, int x, int y);
-int			attempt_map_place(t_map *map, t_map *tetromino, int x, int y);
-
+int				map_intersect(t_map *map, t_map *tetromino, int x, int y);
+int				attempt_map_loc(t_map *map, t_map *tetromino, int x, int y);
+int				attempt_map_insert(t_map *map, t_map *tetromino);
 
 #endif
